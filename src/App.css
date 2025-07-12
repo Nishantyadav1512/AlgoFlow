@@ -1,0 +1,51 @@
+/* Custom styles for the algorithm visualizer */
+
+/* Heading animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.heading-gradient {
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  animation: gradient-shift 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for heading */
+.heading-gradient:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Glow effect */
+.heading-glow {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 20px auto;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Center the heading container */
+.heading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+}
