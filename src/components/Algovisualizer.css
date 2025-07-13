@@ -54,11 +54,26 @@
 
 /* Center the heading container */
 .heading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 0px;
+}
+
+.heading-container img {
+  display: block;
+  margin: 0 auto 8px auto;
+  width: 120px;
+}
+
+.heading-gradient.heading-glow {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Footer styles */
