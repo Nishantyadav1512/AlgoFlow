@@ -1,0 +1,106 @@
+/* TreeVisualizer Component Styles */
+
+.tree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.tree-canvas {
+    width: 100%;
+    height: 600px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.tree-svg {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Node styles */
+.tree-node {
+    transition: all 0.3s ease;
+}
+
+.tree-node-unvisited {
+    fill: #3b82f6;
+    stroke: #2563eb;
+}
+
+.tree-node-current {
+    fill: #ef4444;
+    stroke: #dc2626;
+}
+
+.tree-node-visited {
+    fill: #22c55e;
+    stroke: #16a34a;
+}
+
+.tree-node-text {
+    text-anchor: middle;
+    fill: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Edge styles */
+.tree-edge {
+    stroke: #9ca3af;
+    stroke-width: 3;
+}
+
+/* Controls */
+.tree-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.algorithm-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.algorithm-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #374151;
+}
+
+.algorithm-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    background-color: white;
+    color: #374151;
+    cursor: pointer;
+}
+
+.algorithm-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.path-display {
+    font-size: 14px;
+    color: #6b7280;
+}

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Play, Pause, RotateCcw, SkipBack, SkipForward } from 'lucide-react';
+import './ControlPanel.css';
 
-const ControlPanel = ({ 
-  isPlaying, 
-  togglePlay, 
-  reset, 
-  speed, 
-  setSpeed, 
-  currentStep, 
+const ControlPanel = ({
+  isPlaying,
+  togglePlay,
+  reset,
+  speed,
+  setSpeed,
+  currentStep,
   totalSteps,
-  onStepChange 
+  onStepChange
 }) => {
   const handlePreviousStep = () => {
     if (currentStep > 0 && onStepChange) {
@@ -24,108 +25,59 @@ const ControlPanel = ({
   };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      gap: '15px', 
-      padding: '15px',
-      backgroundColor: '#f8f9fa',
-      borderRadius: '8px',
-      marginBottom: '20px',
-      flexWrap: 'wrap'
-    }}>
+    <div className="control-panel">
       {/* Play / Pause Button */}
-      <button 
+      <button
         onClick={togglePlay}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '5px',
-          padding: '8px 16px',
-          backgroundColor: isPlaying ? '#dc3545' : '#28a745',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          transition: 'all 0.2s ease'
-        }}
+        className={`control-button ${isPlaying ? 'pause-button' : 'play-button'}`}
       >
         {isPlaying ? <Pause size={16} /> : <Play size={16} />}
         {isPlaying ? ' Pause' : ' Play'}
       </button>
 
       {/* Reset Button */}
-      <button 
+      <button
         onClick={reset}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '5px',
-          padding: '8px 16px',
-          backgroundColor: '#6c757d',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          transition: 'all 0.2s ease'
-        }}
+        className="control-button reset-button"
       >
         <RotateCcw size={16} /> Reset
       </button>
 
       {/* Step Navigation */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+      <div className="step-navigation">
         <button
           onClick={handlePreviousStep}
           disabled={currentStep === 0}
-          style={{
-            padding: '8px',
-            backgroundColor: currentStep === 0 ? '#e9ecef' : '#007bff',
-            color: currentStep === 0 ? '#6c757d' : 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: currentStep === 0 ? 'not-allowed' : 'pointer',
-            transition: 'all 0.2s ease'
-          }}
+          className="step-button"
         >
           <SkipBack size={16} />
         </button>
-        
-        <span style={{ fontSize: '14px', minWidth: '80px', textAlign: 'center' }}>
+
+        <span className="step-counter">
           Step: {currentStep + 1} / {totalSteps}
         </span>
-        
+
         <button
           onClick={handleNextStep}
           disabled={currentStep >= totalSteps - 1}
-          style={{
-            padding: '8px',
-            backgroundColor: currentStep >= totalSteps - 1 ? '#e9ecef' : '#007bff',
-            color: currentStep >= totalSteps - 1 ? '#6c757d' : 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: currentStep >= totalSteps - 1 ? 'not-allowed' : 'pointer',
-            transition: 'all 0.2s ease'
-          }}
+          className="step-button"
         >
           <SkipForward size={16} />
         </button>
       </div>
 
       {/* Speed Control */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <label style={{ fontSize: '14px', fontWeight: 'bold' }}>Speed: </label>
+      <div className="speed-control">
+        <label className="speed-label">Speed: </label>
         <input
           type="range"
           min="1"
           max="100"
           value={speed}
           onChange={(e) => setSpeed(Number(e.target.value))}
-          style={{ width: '100px' }}
+          className="speed-slider"
         />
-        <span style={{ fontSize: '14px', minWidth: '40px' }}>{speed}%</span>
+        <span className="speed-value">{speed}%</span>
       </div>
     </div>
   );

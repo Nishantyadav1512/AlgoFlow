@@ -1,0 +1,50 @@
+/* Legend Component Styles */
+
+.legend-container {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.legend-title {
+  margin: 0 0 12px 0;
+  color: #374151;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.legend-items {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #d1d5db;
+}
+
+.legend-color-sorting {
+  border-radius: 3px;
+}
+
+.legend-color-graph,
+.legend-color-tree {
+  border-radius: 50%;
+}
+
+.legend-label {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+} 

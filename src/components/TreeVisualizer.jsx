@@ -1,27 +1,11 @@
 import React from 'react';
+import './TreeVisualizer.css';
 
 const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      alignItems: 'center', 
-      gap: '24px',
-      padding: '24px',
-      backgroundColor: '#f9fafb',
-      borderRadius: '8px',
-      border: '1px solid #e5e7eb'
-    }}>
-      <div style={{ 
-        width: '100%', 
-        height: '600px', 
-        border: '2px solid #e5e7eb', 
-        borderRadius: '8px',
-        backgroundColor: 'white',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <svg width="100%" height="100%" style={{ borderRadius: '8px' }} viewBox="0 0 800 400">
+    <div className="tree-container">
+      <div className="tree-canvas">
+        <svg width="100%" height="100%" className="tree-svg" viewBox="0 0 800 400">
           {/* Edges */}
           {tree.nodes.map((node) => {
             if (node.parent !== null) {
@@ -33,8 +17,7 @@ const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
                   y1={parent.y}
                   x2={node.x}
                   y2={node.y}
-                  stroke="#9ca3af"
-                  strokeWidth="3"
+                  className="tree-edge"
                 />
               );
             }
@@ -43,15 +26,12 @@ const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
 
           {/* Nodes */}
           {tree.nodes.map((node) => {
-            let fillColor = '#3b82f6';
-            let strokeColor = '#2563eb';
-            
+            let nodeClass = 'tree-node tree-node-unvisited';
+
             if (tree.current === node.id) {
-              fillColor = '#ef4444';
-              strokeColor = '#dc2626';
+              nodeClass = 'tree-node tree-node-current';
             } else if (tree.visited.includes(node.id)) {
-              fillColor = '#22c55e';
-              strokeColor = '#16a34a';
+              nodeClass = 'tree-node tree-node-visited';
             }
 
             return (
@@ -60,18 +40,12 @@ const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
                   cx={node.x}
                   cy={node.y}
                   r="15"
-                  fill={fillColor}
-                  stroke={strokeColor}
-                  strokeWidth="3"
-                  style={{ transition: 'all 0.3s ease' }}
+                  className={nodeClass}
                 />
                 <text
                   x={node.x}
                   y={node.y + 4}
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="12"
-                  fontWeight="bold"
+                  className="tree-node-text"
                 >
                   {node.label}
                 </text>
@@ -81,30 +55,13 @@ const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
         </svg>
       </div>
 
-      <div style={{ 
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px',
-        flexWrap: 'wrap',
-        padding: '16px',
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        border: '1px solid #e5e7eb'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#374151' }}>Algorithm: </label>
-          <select 
-            value={algorithm} 
+      <div className="tree-controls">
+        <div className="algorithm-selector">
+          <label className="algorithm-label">Algorithm: </label>
+          <select
+            value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value)}
-            style={{
-              padding: '8px 12px',
-              borderRadius: '6px',
-              border: '1px solid #d1d5db',
-              fontSize: '14px',
-              backgroundColor: 'white',
-              color: '#374151',
-              cursor: 'pointer'
-            }}
+            className="algorithm-select"
           >
             <option value="bfs">BFS (Level Order)</option>
             <option value="dfs">DFS (Pre-order)</option>
@@ -112,8 +69,8 @@ const TreeVisualizer = ({ tree, algorithm, setAlgorithm }) => {
             <option value="inorder">In-order</option>
           </select>
         </div>
-        
-        <div style={{ fontSize: '14px', color: '#6b7280' }}>
+
+        <div className="path-display">
           <strong>Path:</strong> {tree.path.map(id => tree.nodes.find(n => n.id === id)?.label).join(' → ')}
         </div>
       </div>

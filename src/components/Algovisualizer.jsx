@@ -6,6 +6,8 @@ import GraphVisualizer from './GraphVisualizer.jsx'
 import TreeVisualizer from './TreeVisualizer.jsx'
 import Legend from './Legend.jsx'
 import { generateRandomArray, generateSampleGraph, generateSampleTree } from '../utils/dataGenerators.js'
+import './Algovisualizer.css'
+import logo from '../assets/myicon.png'
 
 const Algovisulizer = () => {
   const [activeTab, setActiveTab] = useState('sorting');
@@ -15,13 +17,13 @@ const Algovisulizer = () => {
   const [algorithm, setAlgorithm] = useState('bubble');
   const [totalSteps, setTotalSteps] = useState(0);
   const intervalRef = useRef(null);
-  
+
   // Sorting state
   const [array, setArray] = useState([]);
   const [comparing, setComparing] = useState([]);
   const [swapping, setSwapping] = useState([]);
   const [sorted, setSorted] = useState([]);
-  
+
   // Graph state
   const [graph, setGraph] = useState({
     nodes: [],
@@ -30,7 +32,7 @@ const Algovisulizer = () => {
     current: null,
     path: []
   });
-  
+
   // Tree state
   const [tree, setTree] = useState({
     nodes: [],
@@ -51,7 +53,7 @@ const Algovisulizer = () => {
     setCurrentStep(0);
     setIsPlaying(false);
   }, []);
-  
+
   // Generate sample graph
   const generateGraph = useCallback(() => {
     const nodes = [
@@ -71,7 +73,7 @@ const Algovisulizer = () => {
       { id: 13, x: 550, y: 200, label: 'N' },
       { id: 14, x: 650, y: 200, label: 'O' }
     ];
-    
+
     const edges = [
       { from: 0, to: 1 },
       { from: 0, to: 2 },
@@ -102,7 +104,7 @@ const Algovisulizer = () => {
       { from: 11, to: 13 },
       { from: 12, to: 14 }
     ];
-    
+
     setGraph({
       nodes,
       edges,
@@ -112,7 +114,7 @@ const Algovisulizer = () => {
     });
     setCurrentStep(0);
   }, []);
-  
+
   // Generate sample tree
   const generateTree = useCallback(() => {
     const nodes = [
@@ -148,7 +150,7 @@ const Algovisulizer = () => {
       { id: 29, x: 725, y: 330, label: '30', parent: 14 },
       { id: 30, x: 775, y: 330, label: '31', parent: 14 }
     ];
-    
+
     setTree({
       nodes,
       visited: [],
@@ -175,7 +177,7 @@ const Algovisulizer = () => {
   const bubbleSort = useCallback(() => {
     const arr = [...array];
     const steps = [];
-    
+
     for (let i = 0; i < arr.length - 1; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         steps.push({
@@ -184,7 +186,7 @@ const Algovisulizer = () => {
           swapping: [],
           sorted: [...Array(i).keys()].map(k => arr.length - 1 - k)
         });
-        
+
         if (arr[j] > arr[j + 1]) {
           [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
           steps.push({
@@ -196,32 +198,32 @@ const Algovisulizer = () => {
         }
       }
     }
-    
+
     steps.push({
       array: [...arr],
       comparing: [],
       swapping: [],
       sorted: [...Array(arr.length).keys()]
     });
-    
+
     return steps;
   }, [array]);
-  
+
   const quickSort = useCallback(() => {
     const arr = [...array];
     const steps = [];
-    
+
     const partition = (low, high) => {
       const pivot = arr[high];
       let i = low - 1;
-      
+
       steps.push({
         array: [...arr],
         comparing: [high],
         swapping: [],
         sorted: []
       });
-      
+
       for (let j = low; j < high; j++) {
         steps.push({
           array: [...arr],
@@ -229,7 +231,7 @@ const Algovisulizer = () => {
           swapping: [],
           sorted: []
         });
-        
+
         if (arr[j] < pivot) {
           i++;
           [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -241,7 +243,7 @@ const Algovisulizer = () => {
           });
         }
       }
-      
+
       [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
       steps.push({
         array: [...arr],
@@ -249,10 +251,10 @@ const Algovisulizer = () => {
         swapping: [i + 1, high],
         sorted: []
       });
-      
+
       return i + 1;
     };
-    
+
     const quickSortHelper = (low, high) => {
       if (low < high) {
         const pi = partition(low, high);
@@ -260,39 +262,39 @@ const Algovisulizer = () => {
         quickSortHelper(pi + 1, high);
       }
     };
-    
+
     quickSortHelper(0, arr.length - 1);
-    
+
     steps.push({
       array: [...arr],
       comparing: [],
       swapping: [],
       sorted: [...Array(arr.length).keys()]
     });
-    
+
     return steps;
   }, [array]);
-  
+
   // Graph algorithms
   const bfsGraph = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const queue = [0];
     const path = [];
-    
+
     while (queue.length > 0) {
       const current = queue.shift();
-      
+
       if (!visited.has(current)) {
         visited.add(current);
         path.push(current);
-        
+
         steps.push({
           visited: Array.from(visited),
           current,
           path: [...path]
         });
-        
+
         // Add neighbors to queue
         graph.edges
           .filter(edge => edge.from === current)
@@ -303,25 +305,25 @@ const Algovisulizer = () => {
           });
       }
     }
-    
+
     return steps;
   }, [graph]);
-  
+
   const dfsGraph = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const path = [];
-    
+
     const dfsHelper = (node) => {
       visited.add(node);
       path.push(node);
-      
+
       steps.push({
         visited: Array.from(visited),
         current: node,
         path: [...path]
       });
-      
+
       graph.edges
         .filter(edge => edge.from === node)
         .forEach(edge => {
@@ -330,31 +332,31 @@ const Algovisulizer = () => {
           }
         });
     };
-    
+
     dfsHelper(0);
     return steps;
   }, [graph]);
-  
+
   // Tree algorithms
   const bfsTree = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const queue = [0];
     const path = [];
-    
+
     while (queue.length > 0) {
       const current = queue.shift();
-      
+
       if (!visited.has(current)) {
         visited.add(current);
         path.push(current);
-        
+
         steps.push({
           visited: Array.from(visited),
           current,
           path: [...path]
         });
-        
+
         // Add children to queue
         tree.nodes
           .filter(node => node.parent === current)
@@ -365,25 +367,25 @@ const Algovisulizer = () => {
           });
       }
     }
-    
+
     return steps;
   }, [tree]);
-  
+
   const dfsTree = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const path = [];
-    
+
     const dfsHelper = (nodeId) => {
       visited.add(nodeId);
       path.push(nodeId);
-      
+
       steps.push({
         visited: Array.from(visited),
         current: nodeId,
         path: [...path]
       });
-      
+
       tree.nodes
         .filter(node => node.parent === nodeId)
         .forEach(child => {
@@ -392,35 +394,35 @@ const Algovisulizer = () => {
           }
         });
     };
-    
+
     dfsHelper(0);
     return steps;
   }, [tree]);
-  
+
   const postOrderTree = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const path = [];
-    
+
     const postOrderHelper = (nodeId) => {
       // Get children of current node
       const children = tree.nodes.filter(node => node.parent === nodeId);
-      
+
       // Visit left child first (if exists and not visited)
       if (children.length > 0 && !visited.has(children[0].id)) {
         postOrderHelper(children[0].id);
       }
-      
+
       // Visit right child (if exists and not visited)
       if (children.length > 1 && !visited.has(children[1].id)) {
         postOrderHelper(children[1].id);
       }
-      
+
       // Visit current node last (if not already visited)
       if (!visited.has(nodeId)) {
         visited.add(nodeId);
         path.push(nodeId);
-        
+
         steps.push({
           visited: Array.from(visited),
           current: nodeId,
@@ -428,47 +430,47 @@ const Algovisulizer = () => {
         });
       }
     };
-    
+
     postOrderHelper(0);
     return steps;
   }, [tree]);
-  
+
   const inOrderTree = useCallback(() => {
     const steps = [];
     const visited = new Set();
     const path = [];
-    
+
     const inOrderHelper = (nodeId) => {
       // Get children of current node
       const children = tree.nodes.filter(node => node.parent === nodeId);
-      
+
       // Visit left child first (if exists and not visited)
       if (children.length > 0 && !visited.has(children[0].id)) {
         inOrderHelper(children[0].id);
       }
-      
+
       // Visit current node (if not already visited)
       if (!visited.has(nodeId)) {
         visited.add(nodeId);
         path.push(nodeId);
-        
+
         steps.push({
           visited: Array.from(visited),
           current: nodeId,
           path: [...path]
         });
       }
-      
+
       // Visit right child (if exists and not visited)
       if (children.length > 1 && !visited.has(children[1].id)) {
         inOrderHelper(children[1].id);
       }
     };
-    
+
     inOrderHelper(0);
     return steps;
   }, [tree]);
-  
+
   // Animation control
   const getSteps = useCallback(() => {
     switch (activeTab) {
@@ -493,9 +495,9 @@ const Algovisulizer = () => {
         return [];
     }
   }, [activeTab, algorithm, bubbleSort, quickSort, bfsGraph, dfsGraph, bfsTree, dfsTree, postOrderTree, inOrderTree]);
-  
+
   const steps = getSteps();
-  
+
   useEffect(() => {
     setTotalSteps(steps.length);
   }, [steps]);
@@ -504,7 +506,7 @@ const Algovisulizer = () => {
     if (isPlaying && currentStep < steps.length) {
       const timer = setTimeout(() => {
         const step = steps[currentStep];
-        
+
         if (activeTab === 'sorting') {
           setArray(step.array);
           setComparing(step.comparing);
@@ -525,24 +527,24 @@ const Algovisulizer = () => {
             path: step.path
           }));
         }
-        
+
         setCurrentStep(prev => prev + 1);
       }, 1000 - speed * 9);
-      
+
       return () => clearTimeout(timer);
     } else if (currentStep >= steps.length) {
       setIsPlaying(false);
     }
   }, [isPlaying, currentStep, steps, speed, activeTab]);
-  
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
-  
+
   const reset = () => {
     setIsPlaying(false);
     setCurrentStep(0);
-    
+
     if (activeTab === 'sorting') {
       generateArray();
     } else if (activeTab === 'graph') {
@@ -556,7 +558,7 @@ const Algovisulizer = () => {
     setActiveTab(newTab);
     setCurrentStep(0);
     setIsPlaying(false);
-    
+
     if (newTab === 'sorting') {
       setAlgorithm('bubble');
     } else if (newTab === 'graph') {
@@ -571,16 +573,17 @@ const Algovisulizer = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="algovisualizer-container">
       <div className="heading-container">
-        <h1 className="text-5xl font-extrabold text-center mb-8 heading-gradient heading-glow transition-all duration-300 tracking-wide">
+        <img src={logo} alt="AlgoFlow Logo" style={{ width: '120px', margin: '0 auto 16px auto', display: 'block' }} />
+        <h1 className="heading-gradient heading-glow">
           Algorithm Visualizer
         </h1>
       </div>
-      
+
       <TabSelector activeTab={activeTab} setActiveTab={handleTabChange} />
-      
-      <ControlPanel 
+
+      <ControlPanel
         isPlaying={isPlaying}
         togglePlay={togglePlay}
         reset={reset}
@@ -590,7 +593,7 @@ const Algovisulizer = () => {
         totalSteps={totalSteps}
         onStepChange={handleStepChange}
       />
-      
+
       {activeTab === 'sorting' && (
         <>
           <SortingVisualizer
@@ -627,11 +630,11 @@ const Algovisulizer = () => {
           <Legend type="tree" />
         </>
       )}
-      
+
       {/* Footer */}
-      <footer className="mt-12 text-center py-6 border-t border-gray-200">
-        <p className="text-gray-600 font-medium text-lg">
-          Created by <span className="text-indigo-600 font-bold">Nishant Yadav</span>
+      <footer className="footer">
+        <p className="footer-text">
+          Created by <span className="footer-author">Nishant Yadav</span>
         </p>
       </footer>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Legend.css';
 
 const Legend = ({ type }) => {
   const getLegendItems = () => {
@@ -23,25 +24,16 @@ const Legend = ({ type }) => {
   };
 
   return (
-    <div style={{ 
-      marginTop: '24px',
-      padding: '16px',
-      backgroundColor: '#f3f4f6',
-      borderRadius: '8px',
-      border: '1px solid #e5e7eb'
-    }}>
-      <h4 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '16px', fontWeight: 'bold' }}>Legend:</h4>
-      <div style={{ display: 'flex', gap: '24px', marginTop: '8px', flexWrap: 'wrap' }}>
+    <div className="legend-container">
+      <h4 className="legend-title">Legend:</h4>
+      <div className="legend-items">
         {getLegendItems().map((item, index) => (
-          <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{
-              width: '16px',
-              height: '16px',
-              backgroundColor: item.color,
-              borderRadius: type === 'sorting' ? '3px' : '50%',
-              border: '1px solid #d1d5db'
-            }} />
-            <span style={{ fontSize: '14px', color: '#374151', fontWeight: '500' }}>{item.label}</span>
+          <div key={index} className="legend-item">
+            <div
+              className={`legend-color ${type === 'sorting' ? 'legend-color-sorting' : `legend-color-${type}`}`}
+              style={{ backgroundColor: item.color }}
+            />
+            <span className="legend-label">{item.label}</span>
           </div>
         ))}
       </div>
